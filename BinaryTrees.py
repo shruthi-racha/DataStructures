@@ -62,10 +62,10 @@ def nodeKDistance(root, k):
 
 def isLeaf(root):
     if not(root):
-        return False
+        return 0
     elif (root.left == None and root.right == None):
-        return True
-    return False
+        return 1
+    return 0
 
 def sumLeftLeaves(root):
     sum = 0
@@ -158,7 +158,34 @@ def hasPathSum(root, sum):
             answer = answer or hasPathSum(root.left, subSum)
         if(root.right is not None):
             answer = answer or hasPathSum(root.right, subSum)
-        return answer        
+        return answer   
+
+def sizeOfTree(root):
+    if root is None:
+        return 0
+    else:
+        return (sizeOfTree(root.left) + 1 + sizeOfTree(root.right))
+
+def leafCount(root):
+    if root is None:
+        return 0
+    elif (root.left is None and root.right is None):
+        #print root.value,
+        return 1
+    
+    else :
+        return (leafCount(root.left) + leafCount(root.right))
+
+def getLevelData(root, data, level):
+    if root is None:
+        return 0
+    elif (root.value == data):
+        return level
+    level_var = getLevelData(root.left, data, level+1)
+    if (level_var != 0):
+        return level_var
+    level_var = getLevelData(root.right, data, level+1)
+    return level_var
 
 if __name__ == '__main__':
     
@@ -215,9 +242,9 @@ if __name__ == '__main__':
            /   \
           2      3
         /   \   /  \
-       4    5 8 None
-      /  \   /
-    None    7
+       4     5 8  None
+      /  \    /
+  None  None 7
     '''
     print "\nLevel Order Traversal of Tree(method 1) : " 
     levelOrder1(root) #O(n^2)
@@ -229,3 +256,9 @@ if __name__ == '__main__':
     print "Iterative search for value 9 in tree : " + str(iterativeSearch(root, 9))
     
     print "There exists a path Root to leaf whose sum is 7 : " + str(hasPathSum(root, 7)) #O(n)
+    
+    print "Size of Tree is : " + str(sizeOfTree(root)) 
+    
+    print "Number of Leaves in tree is : " + str(leafCount(root))
+    
+    print "Level of data 7 in tree is : " + str(getLevelData(root, 3, 1))

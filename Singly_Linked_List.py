@@ -19,6 +19,7 @@ class LinkedList:
         while(temp):
             print temp.data
             temp = temp.next
+            
     def push(self, newdata):
         new_node = Node(newdata)
         new_node.next = self.head
